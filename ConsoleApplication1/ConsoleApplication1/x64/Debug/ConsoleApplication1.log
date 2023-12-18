@@ -1,0 +1,4 @@
+﻿  ConsoleApplication1.cpp
+F:\Github\CppCodeChallenge\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(16,23): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+F:\Github\CppCodeChallenge\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(44,19): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  ConsoleApplication1.vcxproj -> F:\Github\CppCodeChallenge\ConsoleApplication1\x64\Debug\ConsoleApplication1.exe
