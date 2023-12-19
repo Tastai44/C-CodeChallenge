@@ -40,9 +40,12 @@ string OldPhonePad(string input) {
 }
 
 string DeleteLetter(string input) {
+    string tem;
 
     int  position = input.find("*");
-    return input.substr(0, (position - 1));
+    tem = input.erase(position - 1, 1);
+
+    return tem.replace(position - 1, 1, " ");
 }
 
 // breck number if there are empty space between input numbers
@@ -67,13 +70,63 @@ string DeleteLetter(string input) {
     return result;
 }
 
+ string CheckDuplicateNumber(string input) {
+     string results;
 
+     for (auto item = input.begin(); item != input.end(); item++) {
+         if (item != input.end() - 1) {
+             if (*item != *next(item)) {
+                 results += *item;
+                 results += " ";
+             }
+             else if (*item == *next(item) && 
+                 (next(item) == input.end() - 1 || *next(item) != *next(next(item)))) 
+             {
+                 results += *item;
+                 results += *next(item);
+                 results += " ";
+                 item = next(item);
+             }
+             else if (*item == *next(item) && 
+                 *next(item) == *next(next(item)) && 
+                 (next(next(item)) == input.end() - 1 || *next(next(item)) != *next(next(next(item))))) 
+             {
+                 results += *item;
+                 results += *next(item);
+                 results += *next(next(item));
+                 results += " ";
+                 item = next(next(item));
+             }
+             else if (*item == *next(item) && 
+                 *next(item) == *next(next(item)) && 
+                 *next(next(item)) == *next(next(next(item))) &&
+                 (next(next(next(item))) == input.end() - 1 || *next(next(next(item))) != *next(next(next(next(item))))))
+             {
+                 results += *item;
+                 results += *next(item);
+                 results += *next(next(item));
+                 results += *next(next(next(item)));
+                 results += " ";
+                 item = next(next(next(item)));
+             }
+         }
+         else {
+             return input;
+         }
+     }
+
+     return results;
+ }
 
  string DisplayLetter(string input) {
+     string temLetter;
      string letterResults;
-
-     for (const auto& item : SeparateNumber(input)) {
-         letterResults += OldPhonePad(DeleteLetter(item));
+     temLetter = DeleteLetter(input);
+     // Big O^2
+     for (const auto& item : SeparateNumber(temLetter)) {
+         for (const auto& letter : SeparateNumber(CheckDuplicateNumber(item))) {
+             letterResults += OldPhonePad(letter);
+         }
      }
      return letterResults;
  }
@@ -89,6 +142,7 @@ int main()
     }
     else {
         cout << DisplayLetter(listNumber);
+        //cout << DeleteLetter(listNumber);
     }
  
     cout << endl;
