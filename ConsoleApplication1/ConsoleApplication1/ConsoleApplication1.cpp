@@ -72,10 +72,14 @@ string DeleteLetter(string input) {
 
  string CheckDuplicateNumber(string input) {
      string results;
-
+     
      for (auto item = input.begin(); item != input.end(); item++) {
+
          if (item != input.end() - 1) {
-             if (*item != *next(item)) {
+
+             if (*item != *next(item) &&
+                 (item == input.end() - 1 || *item != *prev(item))) 
+             {
                  results += *item;
                  results += " ";
              }
@@ -111,17 +115,33 @@ string DeleteLetter(string input) {
              }
          }
          else {
-             return input;
+             if (item == input.end() - 1 || *item != *prev(item))
+             {
+                 results += *item;
+             }
+             else {
+                 results += input;
+             }
          }
      }
 
      return results;
  }
 
+ bool containsAsterisk(const std::string& input) {
+     return input.find('*') != std::string::npos;
+ }
+
  string DisplayLetter(string input) {
      string temLetter;
      string letterResults;
-     temLetter = DeleteLetter(input);
+     if (containsAsterisk(input)) {
+         temLetter = DeleteLetter(input);
+     }
+     else {
+         temLetter = input;
+     }
+
      // Big O^2
      for (const auto& item : SeparateNumber(temLetter)) {
          for (const auto& letter : SeparateNumber(CheckDuplicateNumber(item))) {
@@ -143,6 +163,7 @@ int main()
     else {
         cout << DisplayLetter(listNumber);
         //cout << DeleteLetter(listNumber);
+        //cout << CheckDuplicateNumber(listNumber);
     }
  
     cout << endl;
